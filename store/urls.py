@@ -1,8 +1,17 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import SimpleRouter
 from . import views
 
-urlpatterns = [
-    path('products/', views.product_list, name='products'),
-    path('products/<int:id>/', views.product_detail, name='product_detail'),
-    path('collection/<int:pk>/', views.collectioin_detail, name='collectioin_detail'),
-]
+# from pprint import pprint
+
+
+router = SimpleRouter()
+router.register("products", views.ProductViewSet)
+router.register("collections", views.CollectionViewSet)
+
+urlpatterns = router.urls
+
+# urlpatterns = [
+#     path('', include(router.urls)),
+#     path(),
+# ]
