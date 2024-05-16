@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "core.User"
 
 # Application definition
 
@@ -41,10 +42,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'playground',
     'debug_toolbar',
+    # reuseable apps
     'store',
-    'store_custom',
     'tags',
-    'likes'
+    'likes',
+    # main app
+    'core',
 ]
 
 MIDDLEWARE = [
