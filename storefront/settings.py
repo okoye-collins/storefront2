@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework',
+    'djoser',
     'playground',
     'debug_toolbar',
     # reuseable apps
@@ -146,6 +148,24 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'COERCE_DECIMAL_TO_STRING': False
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'core.serializers.UserCreateSerializer',
+        'current_user': 'core.serializers.UserSerializer',
+    } 
+}
+
+# access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE2MDQ1NTQ4LCJpYXQiOjE3MTU5NTkxNDgsImp0aSI6Ijk2NDE0ZjY5MDAxOTQ3MWU5ZmQ4ODY4NzBmMWQ3Zjg1IiwidXNlcl9pZCI6M30.tuHOTodghLKmuJ63wJe0J7R7gAQP5qCdOptGyp9TPfA
+# refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxNjA0NTU0OCwiaWF0IjoxNzE1OTU5MTQ4LCJqdGkiOiIwOWMzNDI2OTYyNGE0MjZkYWUwNTgxYzE2ZDZiYjFlNiIsInVzZXJfaWQiOjN9.MlyTkF8yar71r9DCO61X8w9vIEao9t3mpTdf3a8rWls
